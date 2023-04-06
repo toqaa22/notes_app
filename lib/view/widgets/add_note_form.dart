@@ -13,7 +13,8 @@ class AddNoteForm extends StatefulWidget {
 class _AddNoteFormState extends State<AddNoteForm> {
   final GlobalKey<FormState> formkey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  String? title ,subtitle;
+  String? title, subtitle;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,34 +22,40 @@ class _AddNoteFormState extends State<AddNoteForm> {
       key: formkey,
       child: Column(
         children: [
-          const SizedBox(height: 40,),
+          const SizedBox(
+            height: 40,
+          ),
           CustomTextField(
-            onsaved: (value){
-              title =value;
+            onsaved: (value) {
+              title = value;
             },
             hintText: 'Title',
           ),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           CustomTextField(
-            onsaved: (value){
-              subtitle =value;
+            onsaved: (value) {
+              subtitle = value;
             },
             hintText: 'Content',
             maxLines: 5,
           ),
-         const SizedBox(height: 30,),
-          CustomButtom(
-onTap: (){
-  if(formkey.currentState!.validate()){
-    formkey.currentState!.save();
-  }else{
-    autovalidateMode =AutovalidateMode.always;
-  }
-},
+          const SizedBox(
+            height: 30,
           ),
-          const SizedBox(height: 16,),
-
-
+          CustomButtom(
+            onTap: () {
+              if (formkey.currentState!.validate()) {
+                formkey.currentState!.save();
+              } else {
+                autovalidateMode = AutovalidateMode.always;
+              }
+            },
+          ),
+          const SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );
