@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'custom_searchicon.dart';
 
 class CustomAppbar extends StatelessWidget {
-  const CustomAppbar({Key? key, required this.icon, required this.title}) : super(key: key);
+  const CustomAppbar({Key? key, required this.icon, required this.title, this.onPressed}) : super(key: key);
+  final void Function()? onPressed;
   final IconData icon;
   final String title;
 
@@ -17,7 +18,10 @@ class CustomAppbar extends StatelessWidget {
         ),
       Text(title,style: GoogleFonts.poppins(fontSize: 28),),
         Spacer(),
-        CustomSearchIcon(),
+        CustomSearchIcon(
+          onPressed: onPressed,
+          icon: icon,
+        ),
       ],
     );
   }

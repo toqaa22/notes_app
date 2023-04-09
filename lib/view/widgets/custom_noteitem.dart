@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:note/models/note_model.dart';
 import 'package:note/view/edit_note_view.dart';
+
+import '../../cubits/notes_cubit.dart';
 class NoteItem extends StatelessWidget {
-  const NoteItem({Key? key}) : super(key: key);
+  const NoteItem({Key? key, required this.note}) : super(key: key);
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return const Edit_note_view();
+          return  Edit_note_view(
+            note: note,
+          );
         }),
         );
       },
@@ -23,16 +30,19 @@ class NoteItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ListTile(
-              title: Text('Flutter Tips',style: GoogleFonts.poppins(color: Colors.black,fontSize: 26),),
+              title: Text(note.title,style: GoogleFonts.poppins(color: Colors.black,fontSize: 26),),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 16,bottom: 16),
-                child: Text('Build Your Career With Me',style: GoogleFonts.poppins(color: Colors.black.withOpacity(0.6),fontSize: 20),),
+                child: Text(note.subtitle,style: GoogleFonts.poppins(color: Colors.black.withOpacity(0.6),fontSize: 20),),
               ),
-              trailing: IconButton(onPressed: (){},icon: Icon(Icons.delete,color:Colors.black,size: 28,),),
+              trailing: IconButton(onPressed: (){
+                note.delete();
+                BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+              },icon: Icon(Icons.delete,color:Colors.black,size: 28,),),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 24),
-              child: Text('May 21,2022',
+              child: Text(note.date,
                 style :GoogleFonts.poppins(
                     color: Colors.black.withOpacity(0.6),
                     fontSize: 16),
